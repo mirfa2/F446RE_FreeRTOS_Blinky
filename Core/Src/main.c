@@ -60,6 +60,20 @@
 	//	Argument: NULL	(We are not passing any parameters)
 	//	Memory Allocation: Dynamic	(The stack and Task Control Block will be allocated from the heap at runtime.)
 
+	// osThreadNew() — Creating the Task(thread), when osThreadNew() is called:
+	//	- Memory is allocated from the FreeRTOS heap
+	// 	- A Task Control Block (TCB) is created
+	// 	- The task is added to the ready list
+	//  - tasks only run after scheduler starts
+	//  - can create multiple tasks
+
+	//osKernelStart() — Starting the Scheduler, when osKernelStart() is called:
+	//	- The FreeRTOS scheduler starts
+	//	- SysTick begins generating RTOS ticks
+	//	- Context switching becomes active
+	//	- The highest priority ready task starts executing
+	//	- From this moment the system is fully under RTOS control. This function never returns under normal conditions.
+
 
 /* USER CODE END PM */
 
