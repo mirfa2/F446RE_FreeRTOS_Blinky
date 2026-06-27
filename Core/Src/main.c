@@ -38,7 +38,27 @@
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
-	//
+	//Config in CubeMX:
+	//set up the HCLK to 180 Mhz using HSE and enable serial wire debug as usual, then enable CMSIS-RTOS V2 in Middleware.
+	//go back to Sys tab and set the timebase_source to a basic timer like TIM6 or TIM7 (By default, STM32 uses SysTick as
+	//the HAL time base. But FreeRTOS also uses SysTick for its scheduler. So we should dedicate another timer as HAL Time Base)
+	//TIM6 is driven by the APB1 clk. Systick and APB1 clk both are derived from SYSCLK. Then Enable Newlib Reentrant in
+	//FreeRTOS → Advanced Settings to make standard C library thread safe.
+
+	//FreeRTOS settings
+	// - Tick_Rate_Hz = 1000  -> sysTick runs at 1 kHz, which means 1ms per tick
+	// - Minimal Stack Size = 128 words -> in 32bit architechture, 1 word is 4 bytes. 128*4= 512 bytes minstack.
+	//									-> min limit important to prevent stack overflow and disasters
+	//									-> each Task has its own stack, which stores localvar,fxcalls,returnAddresses,cpuRegisterduringcontextswitching
+	// - Total Heap Size, used for Tasks,Queues,Semaphores,Timers, TaskControlBlock(TCB), etcs. TCBs handles context switching for the RTOS
+
+	//Tasks configs
+	//	Task Name: DefaultTask (Only for identification)
+	//	Priority: Normal
+	//	Stack Size: 128 words (Minimum allowed value)
+	//	Entry Function: StartDefaultTask	(This is where we will write our code later)
+	//	Argument: NULL	(We are not passing any parameters)
+	//	Memory Allocation: Dynamic	(The stack and Task Control Block will be allocated from the heap at runtime.)
 
 
 /* USER CODE END PM */
