@@ -281,10 +281,16 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
+
+	// This is where we write the code for our task. task never returns because if it terminate it can never be run again
+
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+	  osDelay(1000);	//tick rate = 1000 hz, means each tick is 1ms, so min possible osDelay is 1ms
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+	  osDelay(1000);	//osDelay() only blocks the tasks, not the cpu, other tasks can run in the meanwhile
   }
   /* USER CODE END 5 */
 }
